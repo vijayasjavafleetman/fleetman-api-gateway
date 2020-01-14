@@ -83,7 +83,17 @@ stage('SSH transfer') {
      verbose: true,
 
      transfers: [
+ sshTransfer(
 
+       sourceFiles: "",
+
+       removePrefix: "",
+
+       remoteDirectory: "",
+
+       execCommand: "rm -f *.*"
+
+      ),
       sshTransfer(
 
        sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
@@ -92,7 +102,7 @@ stage('SSH transfer') {
 
        remoteDirectory: "",
 
-       execCommand: "rm -f *.*;ansible-playbook -i localhost, -u ansadmin -k -e tag=${REPOSITORY_TAG} fleetman-build-playbook.yaml;"
+       execCommand: "ansible-playbook -i localhost, -u ansadmin -k -e tag=${REPOSITORY_TAG} fleetman-build-playbook.yaml;"
 
       )
 
