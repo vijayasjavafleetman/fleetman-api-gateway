@@ -86,7 +86,7 @@ stage('SSH transfer') {
 
       sshTransfer(
 
-       sourceFiles: ["Dockerfile","fleetman-build-playbook.yaml"],
+       sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
 
        removePrefix: "",
 
