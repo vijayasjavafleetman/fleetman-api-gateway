@@ -62,7 +62,7 @@ node {
               pom = readMavenPom file: 'pom.xml'
               artifactVersion = pom.version
               name = pom.name
-              REPOSITORY_TAG="${env.YOUR_DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_URL}"
+              REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
               echo "${REPOSITORY_TAG}"
 
         }
