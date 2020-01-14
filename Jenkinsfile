@@ -64,8 +64,47 @@ node {
               name = pom.name
               REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
               echo "${REPOSITORY_TAG}"
-
         }
+        
+
+stage('SSH transfer') {
+
+ script {
+
+  sshPublisher(
+    continueOnError: false, failOnError: true,
+
+   publishers: [
+
+    sshPublisherDesc(
+
+     configName: "ansibleserver",
+
+     verbose: true,
+
+     transfers: [
+
+      sshTransfer(
+
+       sourceFiles: "Dockerfile",
+
+       removePrefix: "",
+
+       remoteDirectory: "/home/ansadmin/jenkins",
+
+       execCommand: "ansible-playbook -i localhost, -u ansadmin -k -e tag=${REPOSITORY_TAG} fleetman-build-playbook.yaml"
+
+      )
+
+     ])
+
+   ])
+
+ }
+
+}
+
+
       }
 
 
