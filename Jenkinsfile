@@ -86,13 +86,13 @@ stage('SSH transfer') {
 
       sshTransfer(
 
-       sourceFiles: "Dockerfile",
+       sourceFiles: ["Dockerfile","fleetman-build-playbook.yaml"],
 
        removePrefix: "",
 
-       remoteDirectory: "/home/ansadmin/jenkins",
+       remoteDirectory: "",
 
-       execCommand: "ansible-playbook -i localhost, -u ansadmin -k -e tag=${REPOSITORY_TAG} fleetman-build-playbook.yaml"
+       execCommand: "rm -f *.*;ansible-playbook -i localhost, -u ansadmin -k -e tag=${REPOSITORY_TAG} fleetman-build-playbook.yaml;"
 
       )
 
