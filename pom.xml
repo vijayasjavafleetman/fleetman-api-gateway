@@ -23,6 +23,26 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+<scm>
+   <connection>scm:git:git@github.com:vijayasjavafleetman/fleetman-api-gateway.git</connection>
+   <url>git@github.com:vijayasjavafleetman/fleetman-api-gateway.git</url>
+   <developerConnection>scm:git:git@github.com:vijayasjavafleetman/fleetman-api-gateway.git</developerConnection>
+  <tag>HEAD</tag>
+  </scm>
+
+	<distributionManagement>
+  <repository>
+    <id>release</id>
+    <name>releases</name>
+    <url>http://localhost:7071/artifactory/libs-release-local</url>
+  </repository>
+  <snapshotRepository>
+    <id>snapshot</id>
+    <name>snapshots</name>
+    <url>http://localhost:7071/artifactory/libs-snapshot-local</url>
+  </snapshotRepository>
+</distributionManagement>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -69,15 +89,25 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration><executable>false</executable></configuration>
-			</plugin>				
+				<resources>
+					<resource>
+						<filtering>false</filtering>
+						<directory>src/main/resources</directory>
+					</resource>
+				</resources>
+			</plugin>	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+		</plugin>			
 		</plugins>
 
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
+		
 
 	</build>
 

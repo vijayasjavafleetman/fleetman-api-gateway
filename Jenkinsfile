@@ -1,38 +1,72 @@
-pipeline {
-   agent any
+node {
 
-   environment {
-     // You must set the following environment variables
-     // ORGANIZATION_NAME
-     // YOUR_DOCKERHUB_USERNAME (it doesn't matter if you don't have one)
+    def mvnHome
+    def pom
+    def artifactVersion
+    def tagVersion
+    def retrieveArtifact
+    def name
+    def SERVICE_NAME
+    def REPOSITORY_TAG
 
-     SERVICE_NAME = "fleetman-api-gateway"
-     REPOSITORY_TAG="${YOUR_DOCKERHUB_USERNAME}/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
-   }
+    stage('Prepare') {
+      mvnHome = tool 'MAVENHOME'
+    }
 
-   stages {
-      stage('Preparation') {
-         steps {
-            cleanWs()
-            git credentialsId: 'GitHub', url: "https://github.com/${ORGANIZATION_NAME}/${SERVICE_NAME}"
-         }
+    stage('Checkout') {
+       checkout scm
+    }
+
+    stage('Build') {
+       if (isUnix()) {
+          sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+       } else {
+          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+       }
+    }
+
+    stage('Unit Test') {
+       junit '**/target/surefire-reports/TEST-*.xml'
+       archive 'target/*.jar'
+    }
+
+    stage('Integration Test') {
+      if (isUnix()) {
+         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean verify"
+      } else {
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean verify/)
       }
-      stage('Build') {
-         steps {
-            sh '''mvn clean package'''
-         }
+    }
+
+ 
+
+    if(env.BRANCH_NAME == 'master'){
+      stage('Validate Build Post Prod Release') {
+        if (isUnix()) {
+           sh "'${mvnHome}/bin/mvn' clean package"
+        } else {
+           bat(/"${mvnHome}\bin\mvn" clean package/)
+        }
       }
 
-      stage('Build and Push Image') {
-         steps {
-           sh 'docker image build -t ${REPOSITORY_TAG} .'
-         }
-      }
+    }
 
-      stage('Deploy to Cluster') {
-          steps {
-                    sh 'envsubst < ${WORKSPACE}/deploy.yaml | kubectl apply -f -'
+      if(env.BRANCH_NAME == 'develop'){
+        stage('Snapshot Build And Upload Artifacts') {
+          if (isUnix()) {
+             sh "'${mvnHome}/bin/mvn' clean deploy"
+          } else {
+             bat(/"${mvnHome}\bin\mvn" clean deploy/)
           }
+
+              pom = readMavenPom file: 'pom.xml'
+              artifactVersion = pom.version
+              name = pom.name
+              REPOSITORY_TAG="${env.YOUR_DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_URL}"
+              echo "${REPOSITORY_TAG}"
+
+        }
       }
-   }
+
+
 }
