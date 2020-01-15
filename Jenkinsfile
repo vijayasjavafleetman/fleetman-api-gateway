@@ -8,10 +8,8 @@ node {
     def retrieveArtifact
     def name
     def SERVICE_NAME
-    def REPOSITORY_TAG=10
-environment{
-   REPOSITORY_TAG='10'
-}
+    def REPOSITORY_TAG
+
     
     stage('Prepare') {
       mvnHome = tool 'MAVENHOME'
@@ -21,6 +19,13 @@ environment{
        checkout scm
     }
   stage('Deploy to Cluster') {
+  
+     pom = readMavenPom file: 'pom.xml'
+              artifactVersion = pom.version
+              name = pom.name
+              export REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
+              echo "${REPOSITORY_TAG}"
+              echo "artifact version : ${artifactVersion}"
                  
                         sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/ndeploy.yaml'
                         sh 'cat ${WORKSPACE}/ndeploy.yaml'
