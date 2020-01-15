@@ -25,7 +25,7 @@ node {
               name = pom.name
               REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
               sh 'export REPOSITORY_TAG=${REPOSITORY_TAG}'
-              echo "${REPOSITORY_TAG}"
+              echo "${env.REPOSITORY_TAG}"
               echo "artifact version : ${artifactVersion}"
                  
                         sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/ndeploy.yaml'
