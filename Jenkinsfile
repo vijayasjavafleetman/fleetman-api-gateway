@@ -9,10 +9,7 @@ node {
     def name
     def SERVICE_NAME
     def REPOSITORY_TAG
-  artifactVersion = pom.version
-              name = pom.name
-              REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
-
+ 
     
     stage('Prepare') {
       mvnHome = tool 'MAVENHOME'
@@ -20,7 +17,14 @@ node {
 
     stage('Checkout') {
        checkout scm
+ 
+  artifactVersion = pom.version
+              name = pom.name
+              REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
+
     }
+ 
+ 
   withEnv(['REPOSITORY_TAG=${REPOSITORY_TAG}']) {stage('Deploy to Cluster') {
   
                  
