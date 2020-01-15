@@ -19,7 +19,7 @@
       args:
         chdir: /home/ansadmin/jenkins
     - name: tag docker image
-      command: "docker tag fleetmanapp {{ tag }}"docker rmi fleetmanapp {{ tag }}
+      command: "docker tag fleetmanapp {{ tag }}""
     - name: auth
       command: "docker login -u={{ DOCKER_USERNAME }} -p={{ DOCKER_PASSWD }}"
     - name: push the name to registry
