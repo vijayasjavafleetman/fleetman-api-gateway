@@ -17,7 +17,7 @@ node {
 
     stage('Checkout') {
        checkout scm
- 
+  pom = readMavenPom file: 'pom.xml'
   artifactVersion = pom.version
               name = pom.name
               REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
