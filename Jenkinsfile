@@ -95,8 +95,14 @@ node {
                      ])
                   }
 
-}
+            }
 
+            stage('Deploy to Cluster') {
+                  steps {
+                        sh 'envsubst < ${WORKSPACE}/deploy.yaml'
+                        sh 'cat deploy.yaml'
+                  }
+            }
 
       }
 
