@@ -28,7 +28,7 @@ environment{
   
      pom = readMavenPom file: 'pom.xml'
             
-              echo "${env.REPOSITORY_TAG}"
+              echo "${REPOSITORY_TAG}"
                  
                         sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/ndeploy.yaml'
                         sh 'cat ${WORKSPACE}/ndeploy.yaml'
