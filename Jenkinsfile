@@ -64,53 +64,35 @@ node {
               name = pom.name
               REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
               echo "${REPOSITORY_TAG}"
+              echo "artifact version : ${artifactVersion}"
         }
         
 
-stage('SSH transfer') {
-
- script {
-
-  sshPublisher(
-    continueOnError: false, failOnError: true,
-
-   publishers: [
-
-    sshPublisherDesc(
-
-     configName: "ansibleserver",
-
-     verbose: true,
-
-     transfers: [
- sshTransfer(
-
-       sourceFiles: "",
-
-       removePrefix: "",
-
-       remoteDirectory: "",
-
-       execCommand: "rm -f *.*"
-
-      ),
-      sshTransfer(
-
-       sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
-
-       removePrefix: "",
-
-       remoteDirectory: "",
-
-       execCommand: "ansible-playbook -i localhost, -u ansadmin -k -e tag=${REPOSITORY_TAG} fleetman-build-playbook.yaml;"
-
-      )
-
-     ])
-
-   ])
-
- }
+         stage('SSH transfer') {
+                script {
+                  sshPublisher(
+                     continueOnError: false,
+                     failOnError: true,
+                     publishers: [
+                                  sshPublisherDesc(
+                                  configName: "ansibleserver",
+                                  verbose: true,
+                                  transfers: [
+                                                sshTransfer(
+                                                   sourceFiles: "",
+                                                   removePrefix: "",
+                                                   remoteDirectory: "",
+                                                   execCommand: "rm -f *.*"
+                                                ),
+                                                sshTransfer(
+                                                   sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
+                                                   removePrefix: "",
+                                                   remoteDirectory: "",
+                                                   execCommand: "ansible-playbook -i hosts -u ansadmin -e tag=${REPOSITORY_TAG} -e ARTIFACT_VERSION=${artifactVersion} -e ARTIFACTORY_URL_URL=${env.ARTIFACTORY_SNAPSHOT_URL} -e ARTIFACTORY_USERNAME=${env.ARTIFACTORY_USERNAME} -e ARTIFACTORY_PASSWD=${env.ARTIFACTORY_PASSWD} -e DOCKER_USERNAME=${env.DOCKER_USERNAME} -e DOCKER_PASSWD=${env.DOCKER_PASSWD} fleetman-build-playbook.yaml;"
+                                                )
+                                 ])
+                     ])
+                  }
 
 }
 
