@@ -20,7 +20,7 @@
     - name: tag docker image
       command: "docker tag fleetmanapp {{ tag }}"
     - name: auth
-      command: "docker login -u={{ DOCKER_USERNAME }} -p={{ DOCKER_PASSWD }}"
+      command: "echo {{ DOCKER_PASSWD }} | docker login --username {{ DOCKER_USERNAME }} --password-stdin"
     - name: push the name to registry
       command: "docker push {{ tag }}"
     - name: cleaning
