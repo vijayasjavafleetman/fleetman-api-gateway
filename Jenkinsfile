@@ -8,7 +8,7 @@ node {
     def retrieveArtifact
     def name
     def SERVICE_NAME
-    def REPOSITORY_TAG
+    def NREPOSITORY_TAG
  
     
     stage('Prepare') {
@@ -20,14 +20,15 @@ node {
   pom = readMavenPom file: 'pom.xml'
   artifactVersion = pom.version
               name = pom.name
-              REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
+              NREPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
 
     }
  
  
-  withEnv(['REPOSITORY_TAG=${REPOSITORY_TAG}']) {stage('Deploy to Cluster') {
+  withEnv(['REPOSITORY_TAG=${NREPOSITORY_TAG}']) {stage('Deploy to Cluster') {
   
-                 
+                        echo 'a  : ${REPOSITORY_TAG}'
+                                    echo 'b : ${env.REPOSITORY_TAG}'
                         sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/ndeploy.yaml'
                         sh 'cat ${WORKSPACE}/ndeploy.yaml'
                 
