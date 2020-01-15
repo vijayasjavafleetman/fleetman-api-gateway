@@ -9,13 +9,10 @@ node {
     def name
     def SERVICE_NAME
     def REPOSITORY_TAG
-
-environment{
   artifactVersion = pom.version
               name = pom.name
               REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
 
-}
     
     stage('Prepare') {
       mvnHome = tool 'MAVENHOME'
@@ -24,17 +21,14 @@ environment{
     stage('Checkout') {
        checkout scm
     }
-  stage('Deploy to Cluster') {
+  withEnv(['REPOSITORY_TAG=${REPOSITORY_TAG}']) {stage('Deploy to Cluster') {
   
-     pom = readMavenPom file: 'pom.xml'
-            
-              echo "${REPOSITORY_TAG}"
                  
                         sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/ndeploy.yaml'
                         sh 'cat ${WORKSPACE}/ndeploy.yaml'
                 
             }
-
+  }
     stage('Build') {
        if (isUnix()) {
           sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
