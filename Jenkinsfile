@@ -85,6 +85,7 @@ node {
                                                    execCommand: "rm -f *.*"
                                                 ),
                                                 sshTransfer(
+                                                   execTimeout: 240000,
                                                    sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "",
