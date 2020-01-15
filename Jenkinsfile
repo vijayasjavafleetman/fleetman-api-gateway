@@ -1,5 +1,6 @@
 node {
 
+
     def mvnHome
     def pom
     def artifactVersion
@@ -8,7 +9,9 @@ node {
     def name
     def SERVICE_NAME
     def REPOSITORY_TAG=10
-
+environment{
+   REPOSITORY_TAG=10
+}
     
     stage('Prepare') {
       mvnHome = tool 'MAVENHOME'
