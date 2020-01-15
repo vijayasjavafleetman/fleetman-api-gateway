@@ -7,12 +7,12 @@
         group_id: com.virtualpairprogrammers
         artifact_id: fleetman
         extension: jar
-        repository_url: {{ ARTIFACTORY_URL }}
-        dest: /home/ansadmin/jenkins/fleetman.jar
-        username: {{ ARTIFACTORY_USERNAME }}
-        password: {{ ARTIFACTORY_PASSWD }}
+        repository_url: "{{ ARTIFACTORY_URL }}"
+        dest: "/home/ansadmin/jenkins/fleetman.jar"
+        username: "{{ ARTIFACTORY_USERNAME }}"
+        password: "{{ ARTIFACTORY_PASSWD }}"
         extension: "jar"
-        version: {{ ARTIFACT_VERSION }}
+        version: "{{ ARTIFACT_VERSION }}"
     - name: building docker image
       command: "docker build -t fleetmanapp ."
       args:
