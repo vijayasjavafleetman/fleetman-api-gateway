@@ -10,7 +10,7 @@ node {
     def SERVICE_NAME
     def REPOSITORY_TAG=10
 environment{
-   REPOSITORY_TAG=10
+   REPOSITORY_TAG='10'
 }
     
     stage('Prepare') {
