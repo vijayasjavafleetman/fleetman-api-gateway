@@ -19,8 +19,8 @@ node {
     }
   stage('Deploy to Cluster') {
                  
-                        sh 'envsubst < ${WORKSPACE}/deploy.yaml'
-                        sh 'cat deploy.yaml'
+                        sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/ndeploy.yaml'
+                        sh 'cat ${WORKSPACE}/ndeploy.yaml'
                 
             }
 
