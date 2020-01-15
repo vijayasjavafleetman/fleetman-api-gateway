@@ -25,7 +25,7 @@ node {
               name = pom.name
               NREPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
 
-  withEnv(['REPOSITORY_TAG="${NREPOSITORY_TAG}"']) {stage('Deploy to Cluster') {
+  withEnv(["REPOSITORY_TAG=${NREPOSITORY_TAG}"]) {stage('Deploy to Cluster') {
 
   
             
