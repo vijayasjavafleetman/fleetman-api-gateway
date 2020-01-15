@@ -25,15 +25,7 @@ node {
               name = pom.name
               NREPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}.${env.BUILD_ID}"
 
-  withEnv(["REPOSITORY_TAG=${NREPOSITORY_TAG}"]) {stage('Deploy to Cluster') {
-
   
-            
-                        sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/ndeploy.yaml'
-                        sh 'cat ${WORKSPACE}/ndeploy.yaml'
-                
-            }
-  }
     stage('Build') {
        if (isUnix()) {
           sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
@@ -114,13 +106,44 @@ node {
 
             }
 
-            stage('Deploy to Cluster') {
-                 
-                        sh 'envsubst < ${WORKSPACE}/deploy.yaml'
-                        sh 'cat deploy.yaml'
-                
-            }
+            withEnv(["REPOSITORY_TAG=${NREPOSITORY_TAG}"]) {stage('Deploy to Cluster') {
 
+            
+                        
+                                    sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/deploy.yaml'
+                                    sh 'cat ${WORKSPACE}/deploy.yaml'
+
+                     stage('SSH transfer') {
+                script {
+                  sshPublisher(
+                     continueOnError: false,
+                     failOnError: true,
+                     publishers: [
+                                  sshPublisherDesc(
+                                  configName: "ansibleserver",
+                                  verbose: true,
+                                  transfers: [
+                                                sshTransfer(
+                                                   sourceFiles: "",
+                                                   removePrefix: "",
+                                                   remoteDirectory: "",
+                                                   execCommand: "rm -f *.*"
+                                                ),
+                                                sshTransfer(
+                                                   execTimeout: 240000,
+                                                   sourceFiles: "deploy.yaml,fleetman-deployment-playbook.yaml",
+                                                   removePrefix: "",
+                                                   remoteDirectory: "",
+                                                   execCommand: "pwd;ansible-playbook -i /home/ansadmin/jenkins/hosts -u ansadmin  /home/ansadmin/jenkins/fleetman-build-playbook.yaml;"
+                                                )
+                                 ])
+                     ])
+                  }
+
+            }
+               
+                                                         }
+            }
       }
 
 
