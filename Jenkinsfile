@@ -110,8 +110,8 @@ node {
 
             
                         
-                                    sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/deploy.yaml'
-                                    sh 'cat ${WORKSPACE}/deploy.yaml'
+                                    sh 'envsubst < ${WORKSPACE}/deploy.yaml > ${WORKSPACE}/udeploy.yaml'
+                                    sh 'cat ${WORKSPACE}/udeploy.yaml'
 
                      stage('SSH transfer') {
                 script {
@@ -131,7 +131,7 @@ node {
                                                 ),
                                                 sshTransfer(
                                                    execTimeout: 240000,
-                                                   sourceFiles: "deploy.yaml,fleetman-deployment-playbook.yaml",
+                                                   sourceFiles: "udeploy.yaml,fleetman-deployment-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "",
                                                    execCommand: "pwd;ansible-playbook -i /home/ansadmin/jenkins/hosts -u ansadmin  /home/ansadmin/jenkins/fleetman-deployment-playbook.yaml;"

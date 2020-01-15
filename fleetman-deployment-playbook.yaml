@@ -7,7 +7,7 @@
   - name: test dir
     command: "pwd"
   - name: create a deployment
-    command: "kubectl apply -f deploy.yaml"
+    command: "kubectl apply -f udeploy.yaml"
     args:
       chdir: /home/ansadmin/jenkins
   - name: update deployment with new pods if image updated in docker hub
