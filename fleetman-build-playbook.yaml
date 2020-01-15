@@ -20,7 +20,10 @@
     - name: tag docker image
       command: "docker tag fleetmanapp {{ tag }}"
     - name: auth
-      command: "cat ~/my_password.txt | docker login --username vijayakrishnajava --password-stdin"
+    - name: Log into DockerHub
+      docker_login:
+        username: "{{ DOCKER_USERNAME }}"
+        password: "{{ DOCKER_PASSWD }}"      
     - name: push the name to registry
       command: "docker push {{ tag }}"
     - name: cleaning
