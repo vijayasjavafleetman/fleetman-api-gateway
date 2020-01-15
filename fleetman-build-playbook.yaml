@@ -15,7 +15,7 @@
         extension: "jar"
         version: {{ ARTIFACT_VERSION }}
     - name: building docker image
-      command: docker build -t fleetmanapp .
+      command: "docker build -t fleetmanapp ."
       args:
         chdir: /home/ansadmin/jenkins
     - name: tag docker image
@@ -23,15 +23,15 @@
     - name: auth
       command: "docker login -u={{ DOCKER_USERNAME }} -p={{ DOCKER_PASSWD }}"
     - name: push the name to registry
-      command: "{{item}}"
+      command: "{{ item }}"
       with_items:
        - docker push {{ tag }}
     - name: cleaning
-      command: "{{item}}"
+      command: "{{ item }}"
       with_items:
-       - rm -f *.*
-       - docker rmi fleetmanapp {{ tag }}
-       - docker system prune -f -a
+       - "rm -f *.*"
+       - "docker rmi fleetmanapp {{ tag }}"
+       - "docker system prune -f -a"
       args:
         chdir: /home/ansadmin/jenkins
       ignore_errors: yes
