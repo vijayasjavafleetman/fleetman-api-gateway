@@ -7,8 +7,7 @@
         group_id: com.virtualpairprogrammers
         artifact_id: fleetman
         extension: jar
-        repository_url: {{ ARTIFACTORY_SNAPSHOT_URL }}
-        //repository_url: {{ ARTIFACTORY_URL}}
+        repository_url: {{ ARTIFACTORY_URL }}
         dest: /home/ansadmin/jenkins/fleetman.jar
         username: {{ ARTIFACTORY_USERNAME }}
         password: {{ ARTIFACTORY_PASSWD }}
@@ -23,9 +22,7 @@
     - name: auth
       command: "docker login -u={{ DOCKER_USERNAME }} -p={{ DOCKER_PASSWD }}"
     - name: push the name to registry
-      command: "{{ item }}"
-      with_items:
-       - docker push {{ tag }}
+      command: "docker push {{ tag }}"
     - name: cleaning
       command: "{{ item }}"
       with_items:
