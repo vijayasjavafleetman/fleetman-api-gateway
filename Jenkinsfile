@@ -134,7 +134,7 @@ node {
                                                    sourceFiles: "deploy.yaml,fleetman-deployment-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "",
-                                                   execCommand: "pwd;ansible-playbook -i /home/ansadmin/jenkins/hosts -u ansadmin  /home/ansadmin/jenkins/fleetman-build-playbook.yaml;"
+                                                   execCommand: "pwd;ansible-playbook -i /home/ansadmin/jenkins/hosts -u ansadmin  /home/ansadmin/jenkins/fleetman-deployment-playbook.yaml;"
                                                 )
                                  ])
                      ])
