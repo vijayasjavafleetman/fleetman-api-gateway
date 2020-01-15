@@ -7,7 +7,7 @@ node {
     def retrieveArtifact
     def name
     def SERVICE_NAME
-    def REPOSITORY_TAG
+    def REPOSITORY_TAG=10
 
     
     stage('Prepare') {
