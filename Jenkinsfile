@@ -88,7 +88,7 @@ node {
                                                    sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "",
-                                                   execCommand: "ansible-playbook -i hosts -u ansadmin -e tag=${REPOSITORY_TAG} -e ARTIFACT_VERSION=${artifactVersion} -e ARTIFACTORY_URL_URL=${env.ARTIFACTORY_SNAPSHOT_URL} -e ARTIFACTORY_USERNAME=${env.ARTIFACTORY_USERNAME} -e ARTIFACTORY_PASSWD=${env.ARTIFACTORY_PASSWD} -e DOCKER_USERNAME=${env.DOCKER_USERNAME} -e DOCKER_PASSWD=${env.DOCKER_PASSWD} fleetman-build-playbook.yaml;"
+                                                   execCommand: "pwd;ansible-playbook -i hosts -u ansadmin -e tag=${REPOSITORY_TAG} -e ARTIFACT_VERSION=${artifactVersion} -e ARTIFACTORY_URL_URL=${env.ARTIFACTORY_SNAPSHOT_URL} -e ARTIFACTORY_USERNAME=${env.ARTIFACTORY_USERNAME} -e ARTIFACTORY_PASSWD=${env.ARTIFACTORY_PASSWD} -e DOCKER_USERNAME=${env.DOCKERHUB_USERNAME} -e DOCKER_PASSWD=${env.DOCKERHUB_PASSWD} fleetman-build-playbook.yaml;"
                                                 )
                                  ])
                      ])
