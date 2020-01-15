@@ -4,6 +4,8 @@
   become: true
   user: ansadmin
   tasks: 
+  - name: test dir
+    command: "pwd"
   - name: create a deployment
     command: "kubectl apply -f deploy.yaml"
     args:
