@@ -19,7 +19,6 @@
         chdir: /home/ansadmin/jenkins
     - name: tag docker image
       command: "docker tag fleetmanapp {{ tag }}"
-    - name: auth
     - name: Log into DockerHub
       docker_login:
         username: "{{ DOCKER_USERNAME }}"
