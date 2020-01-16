@@ -40,7 +40,7 @@ public class VehicleController
 	 */
 	public String apiTestUrl()
 	{
-		return "<p>Fleetman API Gateway at " + new Date() + "</p> <p> Developing by Seemakurthi & co</p><p>Currently in Bangalore.</p>";
+		return "<p>Fleetman API Gateway at " + new Date() + "</p> <p> Developing by Seemakurthi & co</p><p>Currently in Bangalore.</p><p>Releasng the version 0.0.6</p>";
 	}
 
 	@GetMapping("/history/{vehicleName}")
