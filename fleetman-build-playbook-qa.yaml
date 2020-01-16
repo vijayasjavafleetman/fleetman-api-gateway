@@ -1,0 +1,38 @@
+---
+  - hosts: localhost
+    become: true
+    tasks:
+    - name: clean the workspace
+      command: "rm -f *"
+      args:
+        chdir: /home/ansadmin/jenkins/fleetman-apigateway-qa/workspace
+    - name: Download WAR file to the Tomcat webapps directory
+      maven_artifact:
+        group_id: com.virtualpairprogrammers
+        artifact_id: fleetman
+        extension: jar
+        repository_url: "{{ ARTIFACTORY_URL }}"
+        dest: "/home/ansadmin/jenkins/fleetman-apigateway-qa/workspace/fleetman.jar"
+        username: "{{ ARTIFACTORY_USERNAME }}"
+        password: "{{ ARTIFACTORY_PASSWD }}"
+        extension: "jar"
+        version: "{{ ARTIFACT_VERSION }}"
+    - name: building docker image
+      command: "docker build -t fleetmanapp ."
+      args:
+        chdir: /home/ansadmin/jenkins/fleetman-apigateway-qa/workspace
+    - name: tag docker image
+      command: "docker tag fleetmanapp {{ tag }}"
+    - name: push the name to registry
+      command: "docker push {{ tag }}"
+    - name: cleaning
+      command: "{{ item }}"
+      with_items:
+       - "rm -f *"
+       - "rm -rf *"
+       - "docker rmi fleetmanapp {{ tag }}"
+       - "docker system prune -f -a"
+      args:
+        chdir: /home/ansadmin/jenkins/fleetman-apigateway-qa/workspace
+      ignore_errors: yes
+  
