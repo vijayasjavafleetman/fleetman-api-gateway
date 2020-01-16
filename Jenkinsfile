@@ -42,8 +42,9 @@ node {
       pom = readMavenPom file: 'pom.xml'
       artifactVersion = pom.version.replace("-SNAPSHOT", "")
       tagVersion = 'v'+artifactVersion
+      name = pom.name
       REPOSITORY_TAG="${env.DOCKERHUB_USERNAME}/${env.ORGANIZATION_NAME}-${name}:${artifactVersion}"
-
+      
       stage('Release Build And Upload Artifacts') {
          if (isUnix()) {
             sh "'${mvnHome}/bin/mvn' clean release:clean release:prepare release:perform"
