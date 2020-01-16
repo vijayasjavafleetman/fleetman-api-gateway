@@ -4,7 +4,7 @@
 
 	<groupId>com.virtualpairprogrammers</groupId>
 	<artifactId>fleetman</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>fleetman</name>
@@ -26,7 +26,7 @@
    <connection>scm:git:git@github.com:vijayasjavafleetman/fleetman-api-gateway.git</connection>
    <url>git@github.com:vijayasjavafleetman/fleetman-api-gateway.git</url>
    <developerConnection>scm:git:git@github.com:vijayasjavafleetman/fleetman-api-gateway.git</developerConnection>
-  <tag>v0.0.4</tag>
+  <tag>HEAD</tag>
   </scm>
 
 	<distributionManagement>
