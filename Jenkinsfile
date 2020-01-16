@@ -94,7 +94,7 @@ node {
                                                    execCommand: "rm -f *.*"
                                                 ),
                                                 sshTransfer(
-                                                   execTimeout: 240000,
+                                                   execTimeout: 999999,
                                                    sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "",
@@ -130,7 +130,7 @@ node {
                                                    execCommand: "rm -f *.*"
                                                 ),
                                                 sshTransfer(
-                                                   execTimeout: 240000,
+                                                   execTimeout: 999999,
                                                    sourceFiles: "udeploy.yaml,fleetman-deployment-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "",
