@@ -79,7 +79,7 @@ node {
                            execTimeout: 999999,
                            sourceFiles: "Dockerfile,fleetman-build-playbook-qa.yaml",
                            removePrefix: "",
-                           remoteDirectory: "fleetman-apigateway/workspace",
+                           remoteDirectory: "fleetman-apigateway-qa/workspace",
                            execCommand: "cd /home/ansadmin/jenkins/fleetman-apigateway-qa/workspace;ansible-playbook -i /home/ansadmin/jenkins/fleetman-apigateway-qa/hostconfig/hosts -u ansadmin -e tag=${REPOSITORY_TAG} -e ARTIFACT_VERSION=${artifactVersion} -e ARTIFACTORY_URL=${env.ARTIFACTORY_RELEASE_URL} -e ARTIFACTORY_USERNAME=${env.ARTIFACTORY_USERNAME} -e ARTIFACTORY_PASSWD=${env.ARTIFACTORY_PASSWD} /home/ansadmin/jenkins/fleetman-apigateway-qa/workspace/fleetman-build-playbook-qa.yaml;"
                         )
                      ]
