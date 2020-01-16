@@ -90,15 +90,15 @@ node {
                                                 sshTransfer(
                                                    sourceFiles: "",
                                                    removePrefix: "",
-                                                   remoteDirectory: "fleetman-apigateway/workspace",
-                                                   execCommand: "rm -f *"
+                                                   remoteDirectory: "",
+                                                   execCommand: "cd /home/ansadmin/jenkins/fleetman-apigateway/workspace;rm -f *;"
                                                 ),
                                                 sshTransfer(
                                                    execTimeout: 999999,
                                                    sourceFiles: "Dockerfile,fleetman-build-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "fleetman-apigateway/workspace",
-                                                   execCommand: "pwd;ansible-playbook -i /home/ansadmin/jenkins/hosts -u ansadmin -e tag=${REPOSITORY_TAG} -e ARTIFACT_VERSION=${artifactVersion} -e ARTIFACTORY_URL=${env.ARTIFACTORY_SNAPSHOT_URL} -e ARTIFACTORY_USERNAME=${env.ARTIFACTORY_USERNAME} -e ARTIFACTORY_PASSWD=${env.ARTIFACTORY_PASSWD} -e DOCKER_USERNAME=${env.DOCKERHUB_USERNAME} -e DOCKER_PASSWD=${env.DOCKERHUB_PASSWD} /home/ansadmin/jenkins/fleetman-build-playbook.yaml;"
+                                                   execCommand: "cd /home/ansadmin/jenkins/fleetman-apigateway/workspace;ansible-playbook -i /home/ansadmin/jenkins/fleetman-apigateway/hostconfig/hosts -u ansadmin -e tag=${REPOSITORY_TAG} -e ARTIFACT_VERSION=${artifactVersion} -e ARTIFACTORY_URL=${env.ARTIFACTORY_SNAPSHOT_URL} -e ARTIFACTORY_USERNAME=${env.ARTIFACTORY_USERNAME} -e ARTIFACTORY_PASSWD=${env.ARTIFACTORY_PASSWD} -e DOCKER_USERNAME=${env.DOCKERHUB_USERNAME} -e DOCKER_PASSWD=${env.DOCKERHUB_PASSWD} /home/ansadmin/jenkins/fleetman-build-playbook.yaml;"
                                                 )
                                  ])
                      ])
@@ -126,15 +126,15 @@ node {
                                                 sshTransfer(
                                                    sourceFiles: "",
                                                    removePrefix: "",
-                                                   remoteDirectory: "fleetman-apigateway/workspace",
-                                                   execCommand: "rm -f *.*"
+                                                   remoteDirectory: "",
+                                                   execCommand: "cd /home/ansadmin/jenkins/fleetman-apigateway/workspace;rm -f *;"
                                                 ),
                                                 sshTransfer(
                                                    execTimeout: 999999,
                                                    sourceFiles: "udeploy.yaml,fleetman-deployment-playbook.yaml",
                                                    removePrefix: "",
                                                    remoteDirectory: "fleetman-apigateway/workspace",
-                                                   execCommand: "pwd;ansible-playbook -i /home/ansadmin/jenkins/hosts -u ansadmin  /home/ansadmin/jenkins/fleetman-deployment-playbook.yaml;"
+                                                   execCommand: "cd /home/ansadmin/jenkins/fleetman-apigateway/workspace;ansible-playbook -i /home/ansadmin/jenkins/fleetman-apigateway/hostconfig/hosts -u ansadmin  /home/ansadmin/jenkins/fleetman-deployment-playbook.yaml;"
                                                 )
                                  ])
                      ])

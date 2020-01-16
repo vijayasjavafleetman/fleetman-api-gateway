@@ -9,7 +9,7 @@
   - name: create a deployment
     command: "kubectl apply -f udeploy.yaml"
     args:
-      chdir: /home/ansadmin/jenkins
+      chdir: /home/ansadmin/jenkins/fleetman-apigateway/workspace
   - name: update deployment with new pods if image updated in docker hub
     command: "kubectl rollout restart deployment.v1.apps/api-gateway"
     
