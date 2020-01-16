@@ -2,7 +2,7 @@
 - name: Create pods using deployment 
   hosts: localhost 
   become: true
-  user: ansadmin
+  user: root
   tasks: 
   - name: test dir
     command: "pwd"
